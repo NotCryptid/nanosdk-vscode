@@ -55,18 +55,6 @@
         "configuration": "./language-configuration.json"
       },
       {
-        "id": "microwrite",
-        "aliases": [
-          "MicroOS Write",
-          "microwrite",
-          "wrt"
-        ],
-        "extensions": [
-          ".wrt"
-        ],
-        "configuration": "./language-configuration.json"
-      },
-      {
         "id": "nanoapp",
         "aliases": [
           "NanoSDK Application",
@@ -87,11 +75,6 @@
         "language": "micropaint",
         "scopeName": "source.micropaint",
         "path": "./syntaxes/micropaint.tmLanguage.json"
-      },
-      {
-        "language": "microwrite",
-        "scopeName": "source.micropaint",
-        "path": "./syntaxes/micropaint.tmLanguage.json"
       }
     ],
     "snippets": [
@@ -107,9 +90,6 @@
         "selector": [
           {
             "filenamePattern": "*.mpi"
-          },
-          {
-            "filenamePattern": "*.wrt"
           }
         ],
         "priority": "default"
@@ -216,7 +196,7 @@
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "test": "node ./out/test/runTests.js"
+    "test": "node ./out/test/compiler.test.js"
   },
   "devDependencies": {
     "@types/node": "^20.11.0",

@@ -162,7 +162,7 @@ LOP end
         if (!iconName)
             return;
         let fileName = iconName;
-        if (!fileName.endsWith('.mpi') && !fileName.endsWith('.wrt')) {
+        if (!fileName.endsWith('.mpi')) {
             fileName += '.mpi';
         }
         const folderUri = getTargetDirectoryUri();
@@ -174,7 +174,7 @@ LOP end
     }));
     // 8. Command: Open Micro Paint Icon Creator
     context.subscriptions.push(vscode.commands.registerCommand('nanosdk.openIconCreator', async (uri) => {
-        if (uri && (uri.fsPath.endsWith('.mpi') || uri.fsPath.endsWith('.wrt'))) {
+        if (uri && uri.fsPath.endsWith('.mpi')) {
             await vscode.commands.executeCommand('vscode.openWith', uri, iconEditorProvider_1.MicroPaintEditorProvider.viewType);
         }
         else {
