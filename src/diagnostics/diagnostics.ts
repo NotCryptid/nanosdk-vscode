@@ -386,8 +386,13 @@ export function updateDiagnostics(
             case 'SVR': {
                 if (args.length < 2) {
                     diagnostics.push(createLineDiag(item.lineIndex, item.text, `${cmd} requires variable name and initial/new value (e.g. ${cmd} score 000).`, vscode.DiagnosticSeverity.Error));
-                } else if (warnUnpadded && isNumeric(args[1])) {
-                    checkNumberPadding(item.lineIndex, args[1], item.text, warnUnpadded, diagnostics);
+                } else {
+                    if (/^[0-9]/.test(args[0])) {
+                        diagnostics.push(createLineDiag(item.lineIndex, item.text, `${cmd} variable name '${args[0]}' cannot start with a digit.`, vscode.DiagnosticSeverity.Error));
+                    }
+                    if (warnUnpadded && isNumeric(args[1])) {
+                        checkNumberPadding(item.lineIndex, args[1], item.text, warnUnpadded, diagnostics);
+                    }
                 }
                 break;
             }
@@ -415,7 +420,20 @@ export function updateDiagnostics(
             }
 
             default: {
-                diagnostics.push(createLineDiag(item.lineIndex, item.text, `Unknown NanoSDK command '${cmd}'. Will be treated as NOP (000).`, vscode.DiagnosticSeverity.Warning));
+                const knownCommands = [
+                    'PRN', 'END', 'ASM', 'IFB', 'LOP', 'WHN',
+                    'CLG', 'LGP', 'LGD', 'LGO', 'LGS', 'LGV', 'LGR', 'DLG', 'LGH', 'LGT', 'LSB',
+                    'DVR', 'SVR', 'VRM', 'VCJ'
+                ];
+                // Check for close matches (typos)
+                const suggestion = findClosestCommand(cmd, knownCommands);
+                const suggestionText = suggestion ? ` Did you mean '${suggestion}'?` : '';
+                diagnostics.push(createLineDiag(
+                    item.lineIndex,
+                    item.text,
+                    `Unknown command '${cmd}'. This command does not exist in NanoSDK (2026.x).${suggestionText}`,
+                    vscode.DiagnosticSeverity.Error
+                ));
                 break;
             }
         }

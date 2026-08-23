@@ -187,6 +187,18 @@
     "configuration": {
       "title": "NanoSDK",
       "properties": {
+        "nanosdk.compiler.version": {
+          "type": "string",
+          "default": "2026.x",
+          "enum": [
+            "2026.x"
+          ],
+          "enumDescriptions": [
+            "NanoSDK Compiler 2026.x — Compiled binary will work on MicroOS 0.1.0-1.1.0"
+          ],
+          "description": "Select the NanoSDK compiler version. This determines which commands and features are available.",
+          "order": 0
+        },
         "nanosdk.compiler.autoCompileOnSave": {
           "type": "boolean",
           "default": false,
@@ -194,8 +206,8 @@
         },
         "nanosdk.diagnostics.warnOnLineLength": {
           "type": "boolean",
-          "default": true,
-          "description": "Show a warning when a line exceeds the MicroOS 36-character limit (unless using :BLW)."
+          "default": false,
+          "description": "Show a warning when a line exceeds the MicroOS 36-character limit (unless using :BLW). Only useful for NanoSDK purists."
         },
         "nanosdk.diagnostics.warnOnUnpaddedNumbers": {
           "type": "boolean",

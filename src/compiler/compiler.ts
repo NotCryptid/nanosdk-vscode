@@ -281,11 +281,19 @@ export async function compileNanoSDK(
                     errors.push(`Line ${li + 5}: LGP requires X and Y parameters.`);
                     break;
                 }
+                if (!isCompilerNumericOrRef(a[0]) || !isCompilerNumericOrRef(a[1])) {
+                    errors.push(`Line ${li + 5}: LGP X and Y parameters must be numbers (e.g. LGP 080 058).`);
+                    break;
+                }
                 out.push('302§' + nsc_pad(a[0]) + '§' + nsc_pad(a[1]));
                 continue;
             case 'LGD':
                 if (a.length < 2) {
                     errors.push(`Line ${li + 5}: LGD requires Width and Height parameters.`);
+                    break;
+                }
+                if (!isCompilerNumericOrRef(a[0]) || !isCompilerNumericOrRef(a[1])) {
+                    errors.push(`Line ${li + 5}: LGD Width and Height parameters must be numbers (e.g. LGD 160 097).`);
                     break;
                 }
                 out.push('303§' + nsc_pad(a[0]) + '§' + nsc_pad(a[1]));
@@ -354,11 +362,19 @@ export async function compileNanoSDK(
                     errors.push(`Line ${li + 5}: DVR requires variable name and initial value.`);
                     break;
                 }
+                if (/^[0-9]/.test(a[0])) {
+                    errors.push(`Line ${li + 5}: DVR variable name '${a[0]}' cannot start with a digit.`);
+                    break;
+                }
                 out.push('501§' + nsc_pad(a[0]) + '§' + nsc_pad(a[1]));
                 continue;
             case 'SVR':
                 if (a.length < 2) {
                     errors.push(`Line ${li + 5}: SVR requires variable name and new value.`);
+                    break;
+                }
+                if (/^[0-9]/.test(a[0])) {
+                    errors.push(`Line ${li + 5}: SVR variable name '${a[0]}' cannot start with a digit.`);
                     break;
                 }
                 out.push('502§' + nsc_pad(a[0]) + '§' + nsc_pad(a[1]));
@@ -367,6 +383,17 @@ export async function compileNanoSDK(
                 if (a.length < 3) {
                     errors.push(`Line ${li + 5}: VRM requires variable name, operation (add/sub/mul/div), and value.`);
                     break;
+                }
+                {
+                    const op = a[1].toLowerCase();
+                    if (op !== 'add' && op !== 'sub' && op !== 'mul' && op !== 'div') {
+                        errors.push(`Line ${li + 5}: VRM invalid operation '${a[1]}'. Must be 'add', 'sub', 'mul', or 'div'.`);
+                        break;
+                    }
+                    if (!isCompilerNumericOrRef(a[2])) {
+                        errors.push(`Line ${li + 5}: VRM value '${a[2]}' must be a number or variable reference (!var!).`);
+                        break;
+                    }
                 }
                 out.push('503§' + nsc_pad(a[0]) + '§' + nsc_pad(a[1]) + '§' + nsc_pad(a[2]));
                 continue;
@@ -379,9 +406,8 @@ export async function compileNanoSDK(
                 continue;
         }
 
-        // Unknown / unhandled command
-        warnings.push(`Line ${li + 5}: Unknown or unsupported command '${cmd}', compiled as 000 (no-op).`);
-        out.push('000');
+        // Unknown / unhandled command — this is an error, not a warning
+        errors.push(`Line ${li + 5}: Unknown command '${cmd}'. This command does not exist in NanoSDK.`);
     }
 
     if (lgoN > 0) {
@@ -555,4 +581,14 @@ export function nsc_pad(s: string): string {
         return (n < 0 ? '-' : '0') + Math.abs(n);
     }
     return n.toString();
+}
+
+/**
+ * Checks if a string is a valid numeric value or a variable reference (!var! or !var).
+ * Used for type checking command arguments that expect numeric values.
+ */
+export function isCompilerNumericOrRef(s: string): boolean {
+    if (/^-?\d+$/.test(s)) return true;          // plain number
+    if (s.startsWith('!')) return true;            // variable reference (!var! or !var)
+    return false;
 }
