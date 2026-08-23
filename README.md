@@ -23,6 +23,11 @@ Comprehensive VS Code extension for developing **MicroOS** applications with **N
   - Quick action to copy `DAI <filename>` line directly into your code.
 - 🔬 **NSA Disassembler**:
   - Disassemble and inspect compiled `.nsa` binary files into structured bytecode tables and descriptions.
+- 🤖 **NanoCode MCP Server**:
+  - Lets an MCP-aware AI agent (Copilot Chat, Claude Code, etc.) inspect and edit whatever project is live in the on-device **NanoCode** editor over USB serial — not just a saved file, the actual in-progress buffer, so the human stays in control of when it hits disk (via the on-device Save action).
+  - Tools: `get_open_project` (name + line count, or "not open"), `read_file(line_start, line_end)`, `edit_file(old_string, new_string)`.
+  - Requires a MicroOS build with the `editor.status` / `editor.read` / `editor.edit` serial commands (see MicroOS's `src/serial_protocol.ts`).
+  - Set `nanosdk.mcp.serialPort` to the device's serial port (e.g. `COM3`, `/dev/tty.usbmodemXXXX`) to enable it; leave empty to disable.
 
 ---
 

@@ -303,6 +303,42 @@ LOP end
             }
         })
     );
+
+    // 12. NanoCode MCP server registration -- exposes get_open_project/read_file/edit_file
+    // tools that talk over serial to whatever project is live in the on-device NanoCode
+    // editor. Only advertised when a serial port is configured.
+    registerNanoCodeMcpProvider(context);
+}
+
+function registerNanoCodeMcpProvider(context: vscode.ExtensionContext) {
+    const onDidChangeEmitter = new vscode.EventEmitter<void>();
+    context.subscriptions.push(onDidChangeEmitter);
+    context.subscriptions.push(
+        vscode.workspace.onDidChangeConfiguration(e => {
+            if (e.affectsConfiguration('nanosdk.mcp.serialPort')) {
+                onDidChangeEmitter.fire();
+            }
+        })
+    );
+
+    context.subscriptions.push(
+        vscode.lm.registerMcpServerDefinitionProvider('nanosdk.nanocodeMcpProvider', {
+            onDidChangeMcpServerDefinitions: onDidChangeEmitter.event,
+            provideMcpServerDefinitions: () => {
+                const serialPort = vscode.workspace.getConfiguration('nanosdk').get<string>('mcp.serialPort', '');
+                if (!serialPort) {
+                    return [];
+                }
+                return [
+                    new vscode.McpStdioServerDefinition(
+                        'NanoCode (MicroOS device)',
+                        process.execPath,
+                        [context.asAbsolutePath(path.join('out', 'mcp', 'nanocodeServer.js')), `--port=${serialPort}`]
+                    )
+                ];
+            }
+        })
+    );
 }
 
 function getTargetDirectoryUri(): vscode.Uri {
