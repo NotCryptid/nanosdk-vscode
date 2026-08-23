@@ -13,7 +13,6 @@ export function updateDiagnostics(
 
     const diagnostics: vscode.Diagnostic[] = [];
     const config = vscode.workspace.getConfiguration('nanosdk');
-    const warnLineLength = config.get<boolean>('diagnostics.warnOnLineLength', true);
     const warnUnpadded = config.get<boolean>('diagnostics.warnOnUnpaddedNumbers', true);
 
     const text = document.getText();
@@ -42,21 +41,6 @@ export function updateDiagnostics(
                 "Character '§' is reserved as an opcode delimiter in MicroOS and will corrupt compiling.",
                 vscode.DiagnosticSeverity.Error
             ));
-        }
-
-        // 36 char limit check (unless comment or ends with :BLW)
-        if (warnLineLength && lText.length > 36) {
-            const trimmed = lText.trim();
-            if (!trimmed.startsWith('//') && !trimmed.startsWith('#') && !trimmed.toUpperCase().endsWith(':BLW')) {
-                const range = new vscode.Range(li, 36, li, lText.length);
-                const diag = new vscode.Diagnostic(
-                    range,
-                    `Line is ${lText.length} characters long. MicroOS on-screen keyboard limits lines to 36 characters. Use ':BLW' to break across lines.`,
-                    vscode.DiagnosticSeverity.Warning
-                );
-                diag.code = 'LINE_TOO_LONG';
-                diagnostics.push(diag);
-            }
         }
     }
 
@@ -580,4 +564,32 @@ function createLineDiag(
 ): vscode.Diagnostic {
     const range = new vscode.Range(lineIndex, 0, lineIndex, lineText.length);
     return new vscode.Diagnostic(range, message, severity);
+}
+
+function levenshteinDistance(a: string, b: string): number {
+    const dp: number[][] = Array.from({ length: a.length + 1 }, () => new Array(b.length + 1).fill(0));
+    for (let i = 0; i <= a.length; i++) dp[i][0] = i;
+    for (let j = 0; j <= b.length; j++) dp[0][j] = j;
+    for (let i = 1; i <= a.length; i++) {
+        for (let j = 1; j <= b.length; j++) {
+            dp[i][j] = a[i - 1] === b[j - 1]
+                ? dp[i - 1][j - 1]
+                : 1 + Math.min(dp[i - 1][j - 1], dp[i - 1][j], dp[i][j - 1]);
+        }
+    }
+    return dp[a.length][b.length];
+}
+
+function findClosestCommand(cmd: string, knownCommands: string[]): string | undefined {
+    const upperCmd = cmd.toUpperCase();
+    let best: string | undefined;
+    let bestDistance = Infinity;
+    for (const known of knownCommands) {
+        const distance = levenshteinDistance(upperCmd, known);
+        if (distance < bestDistance) {
+            bestDistance = distance;
+            best = known;
+        }
+    }
+    return bestDistance <= 2 ? best : undefined;
 }

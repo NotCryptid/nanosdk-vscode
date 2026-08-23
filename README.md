@@ -7,7 +7,6 @@ Comprehensive VS Code extension for developing **MicroOS** applications with **N
 - 📝 **Language Support (`.nsp`)**: Syntax highlighting, intelligent code completion, hover documentation, snippets, and document formatting.
 - 🔍 **Real-Time Diagnostics & Linting**:
   - Validates 4-line header requirements (`DAN`, `DAI`, `ASM`, `TXP`).
-  - Warns on lines exceeding MicroOS 36-character keyboard limit (with `:BLW` support).
   - Checks 3-digit number padding conventions (e.g. `005`, `020`) with QuickFix actions.
   - Matches control blocks (`IFB ... IFB end`, `LOP ... LOP end`, `WHN ... WHN end`).
   - Flags dangerous delimiter characters (`~`, `§`) that break MicroOS file formats.

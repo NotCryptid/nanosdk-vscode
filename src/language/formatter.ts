@@ -62,21 +62,6 @@ export class NanoSDKCodeActionProvider implements vscode.CodeActionProvider {
                 actions.push(fix);
             }
 
-            if (diagnostic.code === 'LINE_TOO_LONG') {
-                const fix = new vscode.CodeAction(`Break line with :BLW`, vscode.CodeActionKind.QuickFix);
-                const line = document.lineAt(diagnostic.range.start.line);
-                const lineText = line.text;
-                // Suggest splitting around 30 chars
-                const splitPoint = lineText.lastIndexOf(' ', 30);
-                if (splitPoint > 5) {
-                    const firstPart = lineText.substring(0, splitPoint).trim() + ' :BLW';
-                    const secondPart = '  ' + lineText.substring(splitPoint).trim();
-                    fix.edit = new vscode.WorkspaceEdit();
-                    fix.edit.replace(document.uri, line.range, `${firstPart}\n${secondPart}`);
-                    actions.push(fix);
-                }
-            }
-
             if (diagnostic.code === 'ICON_NOT_FOUND') {
                 const createIconFix = new vscode.CodeAction(`Create new icon asset with Micro Paint`, vscode.CodeActionKind.QuickFix);
                 createIconFix.command = {

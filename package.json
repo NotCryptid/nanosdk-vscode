@@ -2,7 +2,7 @@
   "name": "nanosdk-vscode",
   "displayName": "NanoSDK",
   "description": "Full NanoSDK language support for MicroOS: syntax highlighting, real-time error checking, compilation to .nsa, and interactive Micro Paint .mpi icon creator.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "publisher": "CryptidBLeh",
   "icon": "icon.png",
   "engines": {
@@ -203,11 +203,6 @@
           "type": "boolean",
           "default": false,
           "description": "Automatically compile .nsp files to .nsa on save."
-        },
-        "nanosdk.diagnostics.warnOnLineLength": {
-          "type": "boolean",
-          "default": false,
-          "description": "Show a warning when a line exceeds the MicroOS 36-character limit (unless using :BLW). Only useful for NanoSDK purists."
         },
         "nanosdk.diagnostics.warnOnUnpaddedNumbers": {
           "type": "boolean",
