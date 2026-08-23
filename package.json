@@ -4,6 +4,7 @@
   "description": "Full NanoSDK language support for MicroOS: syntax highlighting, real-time error checking, compilation to .nsa, and interactive Micro Paint .mpi icon creator.",
   "version": "1.0.0",
   "publisher": "NotCryptid-NanoSDK",
+  "icon": "icon.png",
   "engines": {
     "vscode": "^1.75.0"
   },
@@ -40,7 +41,11 @@
         "extensions": [
           ".nsp"
         ],
-        "configuration": "./language-configuration.json"
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "light": "./icons/nsp_icon.png",
+          "dark": "./icons/nsp_icon.png"
+        }
       },
       {
         "id": "micropaint",
@@ -52,7 +57,11 @@
         "extensions": [
           ".mpi"
         ],
-        "configuration": "./language-configuration.json"
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "light": "./icons/mpi_icon.png",
+          "dark": "./icons/mpi_icon.png"
+        }
       },
       {
         "id": "nanoapp",
@@ -62,7 +71,18 @@
         ],
         "extensions": [
           ".nsa"
-        ]
+        ],
+        "icon": {
+          "light": "./icons/nsa_icon.png",
+          "dark": "./icons/nsa_icon.png"
+        }
+      }
+    ],
+    "iconThemes": [
+      {
+        "id": "nanosdk-icons",
+        "label": "NanoSDK File Icons",
+        "path": "./icons/icon-theme.json"
       }
     ],
     "grammars": [

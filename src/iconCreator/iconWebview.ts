@@ -366,10 +366,9 @@ export function getIconEditorHtml(fileName: string, initialHexData: string): str
                 <h3>Presets</h3>
                 <div class="actions-row">
                     <button class="btn-action" id="presetDefault">Default App</button>
-                    <button class="btn-action" id="presetGame">Gamepad</button>
-                    <button class="btn-action" id="presetFile">File</button>
-                    <button class="btn-action" id="presetTerminal">Terminal</button>
-                    <button class="btn-action" id="presetHeart">Heart</button>
+                    <button class="btn-action" id="presetFileManager">File Manager</button>
+                    <button class="btn-action" id="presetXcell">Xcell</button>
+                    <button class="btn-action" id="presetWrite">Write</button>
                 </div>
                 <h3 style="margin-top: 8px;">Hex Nibble Stream (64 Nibbles)</h3>
                 <div class="hex-dump" id="hexDisplay"></div>
@@ -626,11 +625,10 @@ export function getIconEditorHtml(fileName: string, initialHexData: string): str
 
         // Presets
         const PRESETS = {
-            default: "0AAAABB0AA1AB1B3AA11B133AA11B133AB1B1132BB131122BB13312203332220",
-            game:    "00FFFF000F5555F00F1551F0FF5555FFFF85559F0F5555F00FFFFFF000000000",
-            file:    "0FFFFFF00F1111F00F111FF00F1111F00F1111F00F1111F00FFFFFF000000000",
-            terminal:"0EEEEEE00E0000E00E5000E00E0500E00E0050E00E0000E00EEEEEE000000000",
-            heart:   "000000000AA00AA0AAAAAAA0AAAAAAAA00AAAAA0000AAA00000A00000000000"
+            default:     "0AAAABB0AA1AB1B3AA11B133AA11B133AB1B1132BB131122BB13312203332220",
+            fileManager: "BBB00000BBBA3245BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB66666666",
+            xcell:       "55555111555551EE51515111551551E151515E1E55555111555551EE44444DDD",
+            write:       "00D11D00773EE3773111111331FEDE133111111331DEFD13311111132DFFEED2"
         };
 
         function applyPreset(hex) {
@@ -640,10 +638,9 @@ export function getIconEditorHtml(fileName: string, initialHexData: string): str
         }
 
         document.getElementById('presetDefault').addEventListener('click', () => applyPreset(PRESETS.default));
-        document.getElementById('presetGame').addEventListener('click', () => applyPreset(PRESETS.game));
-        document.getElementById('presetFile').addEventListener('click', () => applyPreset(PRESETS.file));
-        document.getElementById('presetTerminal').addEventListener('click', () => applyPreset(PRESETS.terminal));
-        document.getElementById('presetHeart').addEventListener('click', () => applyPreset(PRESETS.heart));
+        document.getElementById('presetFileManager').addEventListener('click', () => applyPreset(PRESETS.fileManager));
+        document.getElementById('presetXcell').addEventListener('click', () => applyPreset(PRESETS.xcell));
+        document.getElementById('presetWrite').addEventListener('click', () => applyPreset(PRESETS.write));
 
         document.getElementById('btnSaveCopy').addEventListener('click', () => {
             vscode.postMessage({

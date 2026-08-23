@@ -1,0 +1,28 @@
+{
+  "iconDefinitions": {
+    "_nsp_file": {
+      "iconPath": "./nsp_icon.png"
+    },
+    "_mpi_file": {
+      "iconPath": "./mpi_icon.png"
+    },
+    "_wrt_file": {
+      "iconPath": "./wrt_icon.png"
+    },
+    "_nsa_file": {
+      "iconPath": "./nsa_icon.png"
+    }
+  },
+  "fileExtensions": {
+    "nsp": "_nsp_file",
+    "mpi": "_mpi_file",
+    "wrt": "_wrt_file",
+    "nsa": "_nsa_file"
+  },
+  "languageIds": {
+    "nanosdk": "_nsp_file",
+    "micropaint": "_mpi_file",
+    "microwrite": "_wrt_file",
+    "nanoapp": "_nsa_file"
+  }
+}
