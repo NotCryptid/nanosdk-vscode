@@ -1,0 +1,26 @@
+DAN Counter
+DAI counter.mpi
+ASM main
+TXP 020
+
+// NanoSDK Project: Counter App
+DVR count 000
+CLG ful
+LGH auto
+LGO str3
+Count: !count!
+Add
+Reset
+
+WHN sel 002
+  VRM count add 001
+  LGS 000 Count: !count!
+WHN end
+
+WHN sel 003
+  SVR count 000
+  LGS 000 Count: 000
+WHN end
+
+LOP inf
+LOP end

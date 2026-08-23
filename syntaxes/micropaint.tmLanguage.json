@@ -1,0 +1,47 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Micro Paint Image",
+  "scopeName": "source.micropaint",
+  "patterns": [
+    {
+      "name": "comment.line.double-slash.micropaint",
+      "match": "(//|#).*$"
+    },
+    {
+      "name": "constant.numeric.hex.color.transparent.micropaint",
+      "match": "0"
+    },
+    {
+      "name": "constant.numeric.hex.color.white.micropaint",
+      "match": "1"
+    },
+    {
+      "name": "constant.numeric.hex.color.purple.micropaint",
+      "match": "[2379aAcC]"
+    },
+    {
+      "name": "constant.numeric.hex.color.blue.micropaint",
+      "match": "[45]"
+    },
+    {
+      "name": "constant.numeric.hex.color.orange.micropaint",
+      "match": "[6bB]"
+    },
+    {
+      "name": "constant.numeric.hex.color.green.micropaint",
+      "match": "8"
+    },
+    {
+      "name": "constant.numeric.hex.color.gray.micropaint",
+      "match": "[dDeE]"
+    },
+    {
+      "name": "constant.numeric.hex.color.black.micropaint",
+      "match": "[fF]"
+    },
+    {
+      "name": "invalid.illegal.micropaint",
+      "match": "[^0-9a-fA-F\\s#//]"
+    }
+  ]
+}

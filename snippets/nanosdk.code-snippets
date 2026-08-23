@@ -1,0 +1,151 @@
+{
+  "New NanoSDK Application": {
+    "prefix": ["app", "nanosdk", "dan"],
+    "body": [
+      "DAN ${1:MyApp}",
+      "DAI ${2:default}",
+      "ASM ${3:main}",
+      "TXP ${4:020}",
+      "$0"
+    ],
+    "description": "Standard NanoSDK App Header Template"
+  },
+  "Counter Example App": {
+    "prefix": ["example-counter", "counter"],
+    "body": [
+      "DAN ${1:Counter}",
+      "DAI ${2:default}",
+      "ASM main",
+      "TXP 020",
+      "DVR count 000",
+      "CLG ful",
+      "LGH auto",
+      "LGO str3",
+      "Count: !count!",
+      "Add",
+      "Reset",
+      "WHN sel 002",
+      "VRM count add 001",
+      "LGS 000 Count: !count!",
+      "WHN end",
+      "WHN sel 003",
+      "SVR count 000",
+      "LGS 000 Count: 000",
+      "WHN end",
+      "LOP inf",
+      "LOP end"
+    ],
+    "description": "Full working counter example application"
+  },
+  "ListGUI Setup": {
+    "prefix": ["clg", "listgui"],
+    "body": [
+      "CLG ${1|ful,scl|}",
+      "LGH ${2|auto,off,000|}",
+      "LGO str${3:2}",
+      "${4:Option 1}",
+      "${5:Option 2}",
+      "$0"
+    ],
+    "description": "Create and initialize a ListGUI menu"
+  },
+  "When Selected (ListGUI)": {
+    "prefix": ["whn-sel", "whnsel"],
+    "body": [
+      "WHN sel ${1:001}",
+      "\t$0",
+      "WHN end"
+    ],
+    "description": "When item selected event handler (1-based index)"
+  },
+  "When Button Pressed": {
+    "prefix": ["whn-btn", "whnbtn"],
+    "body": [
+      "WHN btn ${1|btna,btnb,dpdu,dpdd,dpdl,dpdr|} ${2|dwn,ndn|}",
+      "\t$0",
+      "WHN end"
+    ],
+    "description": "When button state event listener"
+  },
+  "When Variable Condition": {
+    "prefix": ["whn-var", "whnvar"],
+    "body": [
+      "WHN var ${1:myVar} ${2|eql,mor,les,moe,loe|} ${3:000}",
+      "\t$0",
+      "WHN end"
+    ],
+    "description": "When variable condition event listener"
+  },
+  "If Bracket (Variable)": {
+    "prefix": ["ifb-var", "ifbvar"],
+    "body": [
+      "IFB var ${1:myVar} ${2|eql,mor,les,moe,loe|} ${3:000}",
+      "\t$0",
+      "IFB end"
+    ],
+    "description": "If block testing a variable condition"
+  },
+  "If Bracket (Button)": {
+    "prefix": ["ifb-btn", "ifbbtn"],
+    "body": [
+      "IFB btn ${1|btna,btnb,dpdu,dpdd,dpdl,dpdr|} ${2|dwn,ndn|}",
+      "\t$0",
+      "IFB end"
+    ],
+    "description": "If block testing button state"
+  },
+  "Loop (Count)": {
+    "prefix": ["lop", "loop"],
+    "body": [
+      "LOP ${1:010}",
+      "\t$0",
+      "LOP end"
+    ],
+    "description": "Loop block repeating N times or inf"
+  },
+  "Loop Below (Conditional Loop)": {
+    "prefix": ["lop-blw", "lopblw"],
+    "body": [
+      "LOP :BLW",
+      "IFB btn ${1|btna,btnb,dpdu,dpdd,dpdl,dpdr|} ${2|dwn,ndn|}",
+      "\t$0",
+      "LOP end"
+    ],
+    "description": "Conditional loop running while condition is met"
+  },
+  "Define Variable": {
+    "prefix": ["dvr", "var"],
+    "body": [
+      "DVR ${1:varName} ${2:000}"
+    ],
+    "description": "Define a variable with initial value"
+  },
+  "Set Variable": {
+    "prefix": ["svr"],
+    "body": [
+      "SVR ${1:varName} ${2:000}"
+    ],
+    "description": "Set a variable value"
+  },
+  "Variable Math": {
+    "prefix": ["vrm", "math"],
+    "body": [
+      "VRM ${1:varName} ${2|add,sub,mul,div|} ${3:001}"
+    ],
+    "description": "Perform math on a variable"
+  },
+  "Variable Content Join": {
+    "prefix": ["vcj", "join"],
+    "body": [
+      "VCJ ${1:varName} ${2:text}"
+    ],
+    "description": "Append text or variable to a variable"
+  },
+  "Print Popup": {
+    "prefix": ["prn", "print"],
+    "body": [
+      "PRN ${1:Message}"
+    ],
+    "description": "Display a popup message window"
+  }
+}

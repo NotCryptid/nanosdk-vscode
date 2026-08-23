@@ -1,0 +1,226 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "NanoSDK",
+  "scopeName": "source.nanosdk",
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#invalid-chars" },
+    { "include": "#continuation" },
+    { "include": "#var-interpolation" },
+    { "include": "#header-commands" },
+    { "include": "#logic-commands" },
+    { "include": "#listgui-commands" },
+    { "include": "#variable-commands" },
+    { "include": "#basic-commands" },
+    { "include": "#keywords" },
+    { "include": "#numbers" }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.double-slash.nanosdk",
+          "match": "(//|#).*$"
+        }
+      ]
+    },
+    "invalid-chars": {
+      "patterns": [
+        {
+          "name": "invalid.illegal.nanosdk",
+          "match": "[~§]"
+        }
+      ]
+    },
+    "continuation": {
+      "patterns": [
+        {
+          "name": "keyword.other.continuation.nanosdk",
+          "match": ":BLW\\b"
+        }
+      ]
+    },
+    "var-interpolation": {
+      "patterns": [
+        {
+          "name": "variable.other.interpolated.nanosdk",
+          "match": "!([a-zA-Z0-9_]+)!?"
+        }
+      ]
+    },
+    "header-commands": {
+      "patterns": [
+        {
+          "match": "^\\s*(DAN)\\s+(.*)$",
+          "captures": {
+            "1": { "name": "keyword.control.header.dan.nanosdk" },
+            "2": { "name": "entity.name.application.nanosdk" }
+          }
+        },
+        {
+          "match": "^\\s*(DAI)\\s+(default|[^\\s]+)$",
+          "captures": {
+            "1": { "name": "keyword.control.header.dai.nanosdk" },
+            "2": { "name": "string.asset.icon.nanosdk" }
+          }
+        },
+        {
+          "match": "^\\s*(ASM)\\s+(.*)$",
+          "captures": {
+            "1": { "name": "keyword.control.header.asm.nanosdk" },
+            "2": { "name": "entity.name.section.submenu.nanosdk" }
+          }
+        },
+        {
+          "match": "^\\s*(TXP)\\s+(-?\\d+)$",
+          "captures": {
+            "1": { "name": "keyword.control.header.txp.nanosdk" },
+            "2": { "name": "constant.numeric.position.nanosdk" }
+          }
+        }
+      ]
+    },
+    "logic-commands": {
+      "patterns": [
+        {
+          "match": "\\b(IFB)\\s+(var|btn|spr|els|end)\\b",
+          "captures": {
+            "1": { "name": "keyword.control.conditional.nanosdk" },
+            "2": { "name": "keyword.control.target.nanosdk" }
+          }
+        },
+        {
+          "match": "\\b(LOP)\\s+(inf|ext|end|:blw|\\d+)\\b",
+          "captures": {
+            "1": { "name": "keyword.control.repeat.nanosdk" },
+            "2": { "name": "keyword.control.modifier.nanosdk" }
+          }
+        },
+        {
+          "match": "\\b(WHN)\\s+(sel|btn|var|spr|end)\\b",
+          "captures": {
+            "1": { "name": "keyword.control.event.nanosdk" },
+            "2": { "name": "keyword.control.target.nanosdk" }
+          }
+        }
+      ]
+    },
+    "listgui-commands": {
+      "patterns": [
+        {
+          "match": "\\b(CLG)(\\s+(ful|scl))?\\b",
+          "captures": {
+            "1": { "name": "keyword.operator.listgui.nanosdk" },
+            "3": { "name": "constant.language.preset.nanosdk" }
+          }
+        },
+        {
+          "match": "\\b(LGP|LGD)\\b",
+          "name": "keyword.operator.listgui.geometry.nanosdk"
+        },
+        {
+          "match": "\\b(LGO)\\s+(str\\d+)\\b",
+          "captures": {
+            "1": { "name": "keyword.operator.listgui.options.nanosdk" },
+            "2": { "name": "constant.numeric.options-count.nanosdk" }
+          }
+        },
+        {
+          "match": "\\b(LGS|LGV|LGR)\\b",
+          "name": "keyword.operator.listgui.item.nanosdk"
+        },
+        {
+          "match": "\\b(DLG)\\b",
+          "name": "keyword.operator.listgui.destroy.nanosdk"
+        },
+        {
+          "match": "\\b(LGH)(\\s+(off|auto|\\d+))?\\b",
+          "captures": {
+            "1": { "name": "keyword.operator.listgui.highlight.nanosdk" },
+            "3": { "name": "constant.language.highlight-mode.nanosdk" }
+          }
+        },
+        {
+          "match": "\\b(LGT)(\\s+([dlm]))?\\b",
+          "captures": {
+            "1": { "name": "keyword.operator.listgui.theme.nanosdk" },
+            "3": { "name": "constant.language.theme.nanosdk" }
+          }
+        },
+        {
+          "match": "\\b(LSB)(\\s+(on|off))?\\b",
+          "captures": {
+            "1": { "name": "keyword.operator.listgui.scrollbar.nanosdk" },
+            "3": { "name": "constant.language.boolean.nanosdk" }
+          }
+        }
+      ]
+    },
+    "variable-commands": {
+      "patterns": [
+        {
+          "match": "\\b(DVR|SVR)\\s+([a-zA-Z0-9_]+)",
+          "captures": {
+            "1": { "name": "keyword.declaration.variable.nanosdk" },
+            "2": { "name": "variable.name.nanosdk" }
+          }
+        },
+        {
+          "match": "\\b(VRM)\\s+([a-zA-Z0-9_]+)\\s+(add|sub|mul|div)\\b",
+          "captures": {
+            "1": { "name": "keyword.operator.math.nanosdk" },
+            "2": { "name": "variable.name.nanosdk" },
+            "3": { "name": "keyword.operator.arithmetic.nanosdk" }
+          }
+        },
+        {
+          "match": "\\b(VCJ)\\s+([a-zA-Z0-9_]+)",
+          "captures": {
+            "1": { "name": "keyword.operator.join.nanosdk" },
+            "2": { "name": "variable.name.nanosdk" }
+          }
+        }
+      ]
+    },
+    "basic-commands": {
+      "patterns": [
+        {
+          "match": "\\b(PRN|END|ASM)\\b",
+          "name": "keyword.control.basic.nanosdk"
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "match": "\\b(btna|btnb|dpdu|dpdd|dpdl|dpdr)\\b",
+          "name": "support.constant.button.nanosdk"
+        },
+        {
+          "match": "\\b(dwn|ndn)\\b",
+          "name": "support.constant.button-state.nanosdk"
+        },
+        {
+          "match": "\\b(eql|mor|les|moe|loe|tch)\\b",
+          "name": "keyword.operator.comparison.nanosdk"
+        },
+        {
+          "match": "\\b(psx|psy|psz|vsb)\\b",
+          "name": "support.variable.sprite.nanosdk"
+        },
+        {
+          "match": "\\b(default|inf|ful|scl|off|auto|on)\\b",
+          "name": "constant.language.nanosdk"
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.nanosdk",
+          "match": "\\b-?\\d+\\b"
+        }
+      ]
+    }
+  }
+}

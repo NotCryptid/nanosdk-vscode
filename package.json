@@ -1,0 +1,226 @@
+{
+  "name": "nanosdk-vscode",
+  "displayName": "NanoSDK (MicroOS)",
+  "description": "Full NanoSDK language support for MicroOS: syntax highlighting, real-time error checking, compilation to .nsa, and interactive Micro Paint .mpi icon creator.",
+  "version": "1.0.0",
+  "publisher": "NotCryptid-NanoSDK",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Other",
+    "Snippets",
+    "Linters"
+  ],
+  "keywords": [
+    "nanosdk",
+    "microos",
+    "arcade",
+    "pxt",
+    "nsp",
+    "nsa",
+    "mpi",
+    "micropaint"
+  ],
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onLanguage:nanosdk",
+    "onCustomEditor:nanosdk.microPaintEditor"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "nanosdk",
+        "aliases": [
+          "NanoSDK Project",
+          "nanosdk",
+          "nsp"
+        ],
+        "extensions": [
+          ".nsp"
+        ],
+        "configuration": "./language-configuration.json"
+      },
+      {
+        "id": "micropaint",
+        "aliases": [
+          "Micro Paint Image",
+          "micropaint",
+          "mpi"
+        ],
+        "extensions": [
+          ".mpi"
+        ],
+        "configuration": "./language-configuration.json"
+      },
+      {
+        "id": "microwrite",
+        "aliases": [
+          "MicroOS Write",
+          "microwrite",
+          "wrt"
+        ],
+        "extensions": [
+          ".wrt"
+        ],
+        "configuration": "./language-configuration.json"
+      },
+      {
+        "id": "nanoapp",
+        "aliases": [
+          "NanoSDK Application",
+          "nsa"
+        ],
+        "extensions": [
+          ".nsa"
+        ]
+      }
+    ],
+    "grammars": [
+      {
+        "language": "nanosdk",
+        "scopeName": "source.nanosdk",
+        "path": "./syntaxes/nanosdk.tmLanguage.json"
+      },
+      {
+        "language": "micropaint",
+        "scopeName": "source.micropaint",
+        "path": "./syntaxes/micropaint.tmLanguage.json"
+      },
+      {
+        "language": "microwrite",
+        "scopeName": "source.micropaint",
+        "path": "./syntaxes/micropaint.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "nanosdk",
+        "path": "./snippets/nanosdk.code-snippets"
+      }
+    ],
+    "customEditors": [
+      {
+        "viewType": "nanosdk.microPaintEditor",
+        "displayName": "Micro Paint Visual Editor",
+        "selector": [
+          {
+            "filenamePattern": "*.mpi"
+          },
+          {
+            "filenamePattern": "*.wrt"
+          }
+        ],
+        "priority": "default"
+      }
+    ],
+    "commands": [
+      {
+        "command": "nanosdk.compile",
+        "title": "Compile to NSA (.nsa)",
+        "category": "NanoSDK",
+        "icon": "$(play)"
+      },
+      {
+        "command": "nanosdk.openIconCreator",
+        "title": "Open Micro Paint Icon Creator",
+        "category": "NanoSDK",
+        "icon": "$(paintcan)"
+      },
+      {
+        "command": "nanosdk.newProject",
+        "title": "Create New NanoSDK Project (.nsp)",
+        "category": "NanoSDK",
+        "icon": "$(new-file)"
+      },
+      {
+        "command": "nanosdk.newIcon",
+        "title": "Create New Micro Paint Icon (.mpi)",
+        "category": "NanoSDK",
+        "icon": "$(file-media)"
+      },
+      {
+        "command": "nanosdk.decompile",
+        "title": "Inspect / Disassemble NSA Binary",
+        "category": "NanoSDK",
+        "icon": "$(search)"
+      },
+      {
+        "command": "nanosdk.formatPad",
+        "title": "Format & Pad Numbers to 3 Digits",
+        "category": "NanoSDK",
+        "icon": "$(symbol-number)"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "nanosdk.compile",
+          "when": "editorLangId == nanosdk",
+          "group": "navigation@1"
+        },
+        {
+          "command": "nanosdk.openIconCreator",
+          "when": "editorLangId == nanosdk",
+          "group": "navigation@2"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "nanosdk.compile",
+          "when": "resourceExtname == .nsp",
+          "group": "7_modification@1"
+        },
+        {
+          "command": "nanosdk.decompile",
+          "when": "resourceExtname == .nsa",
+          "group": "7_modification@2"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "nanosdk.compile",
+          "when": "editorLangId == nanosdk",
+          "group": "1_modification@1"
+        },
+        {
+          "command": "nanosdk.formatPad",
+          "when": "editorLangId == nanosdk",
+          "group": "1_modification@2"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "NanoSDK",
+      "properties": {
+        "nanosdk.compiler.autoCompileOnSave": {
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically compile .nsp files to .nsa on save."
+        },
+        "nanosdk.diagnostics.warnOnLineLength": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show a warning when a line exceeds the MicroOS 36-character limit (unless using :BLW)."
+        },
+        "nanosdk.diagnostics.warnOnUnpaddedNumbers": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show hints/warnings when number parameters are not padded to 3 digits (e.g. 005 instead of 5)."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "test": "node ./out/test/runTests.js"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.75.0",
+    "typescript": "^5.3.3"
+  }
+}
