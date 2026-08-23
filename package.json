@@ -1,9 +1,9 @@
 {
   "name": "nanosdk-vscode",
-  "displayName": "NanoSDK (MicroOS)",
+  "displayName": "NanoSDK",
   "description": "Full NanoSDK language support for MicroOS: syntax highlighting, real-time error checking, compilation to .nsa, and interactive Micro Paint .mpi icon creator.",
   "version": "1.0.0",
-  "publisher": "NotCryptid-NanoSDK",
+  "publisher": "CryptidBLeh",
   "icon": "icon.png",
   "engines": {
     "vscode": "^1.75.0"
@@ -76,13 +76,6 @@
           "light": "./icons/nsa_icon.png",
           "dark": "./icons/nsa_icon.png"
         }
-      }
-    ],
-    "iconThemes": [
-      {
-        "id": "nanosdk-icons",
-        "label": "NanoSDK File Icons",
-        "path": "./icons/icon-theme.json"
       }
     ],
     "grammars": [
